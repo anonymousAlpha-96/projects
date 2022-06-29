@@ -4,6 +4,8 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QFontDialog>
+#include <QFont>
 
 notepad::notepad(QWidget *parent)
     : QMainWindow(parent)
@@ -61,7 +63,7 @@ void notepad::on_actionSave_triggered()
 
 void notepad::on_actionSave_As_triggered()
 {
-    QString file_name = QFileDialog::getSaveFileName(this, "File saving");
+    QString file_name = QFileDialog::getSaveFileName(this, "File save as");
     QFile file(file_name);
     if(!file.open(QFile::WriteOnly|QFile::Text))
     {
@@ -74,7 +76,6 @@ void notepad::on_actionSave_As_triggered()
     file.flush();
     file.close();
 }
-
 
 void notepad::on_actionExit_triggered()
 {
@@ -98,14 +99,12 @@ void notepad::on_actionCopy_2_triggered()
 void notepad::on_actionPaste_triggered()
 {
     ui->textEdit->paste();
-
 }
 
 
 void notepad::on_actionRedo_triggered()
 {
     ui->textEdit->undo();
-
 }
 
 
@@ -117,6 +116,17 @@ void notepad::on_actionRedo_2_triggered()
 
 void notepad::on_actionAbout_Notepad_triggered()
 {
-    QMessageBox::information(this,"Developer Info","All rights reserved♥    \nDeveloped by Ankit     \nVersion v1.0");
+    QMessageBox::about(this,"Developer Info","(C)All rights reserved♥    \nDeveloped by Ankit     \nVersion v1.1");
+}
+
+void notepad::on_actionFont_Styles_triggered()
+{
+    bool okay;
+    QFont font = QFontDialog::getFont(&okay,this);
+    if(okay)
+    {
+        ui->textEdit->setFont(font);
+    }
+    else return ;
 }
 
